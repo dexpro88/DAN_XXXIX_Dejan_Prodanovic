@@ -81,6 +81,21 @@ namespace DAN_XXXIX_Dejan_Prodanovic
 
         }
 
+        public static int SongNumberInput()
+        {
+            int songNumber;
+            bool success;
+            do
+            {
+                success = Int32.TryParse(Console.ReadLine(), out songNumber);
+                if (!success)
+                {
+                    Console.WriteLine("Nevalidan unos unesite ceo broj");
+                }
+            } while (!success);
+            return songNumber;
+        }
+
         private static bool IsStringNumeric(string str)
         {
             for (int i = 0; i < str.Length; i++)
