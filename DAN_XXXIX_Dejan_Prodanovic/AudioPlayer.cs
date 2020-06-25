@@ -18,7 +18,7 @@ namespace DAN_XXXIX_Dejan_Prodanovic
             switch (option)
             {
                 case "1":
-                    
+                    AddSong();
                     break;
                 case "2":
                     ReadSongs();
@@ -43,11 +43,27 @@ namespace DAN_XXXIX_Dejan_Prodanovic
 
         public void AddSong()
         {
+            string author = Validations.AuthorInput();
+            string songName = Validations.SongNameInput();
+
+            string hours, minutes, seconds;
+
+            Validations.SongDurationInput(out hours, out minutes, out seconds);
+
+            if (hours.Length != 2)
+                hours = String.Format("0{0}",hours);
+
+            if (minutes.Length != 2)
+                minutes = String.Format("0{0}", minutes);
+
+            if (seconds.Length != 2)
+                seconds = String.Format("0{0}", seconds);
+
             using (StreamWriter sw = File.AppendText("../../Music.txt"))
             {
-                sw.WriteLine("This");
-                sw.WriteLine("is Extra");
-                sw.WriteLine("Text");
+                string songForFile = String.Format("{0},{1},{2}:{3}:{4}",author,songName,hours,minutes,seconds);
+                sw.WriteLine(songForFile);
+                
             }
         }
     }
