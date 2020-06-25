@@ -11,6 +11,9 @@ namespace DAN_XXXIX_Dejan_Prodanovic
         public string Author { get; set; }
         public string Name { get; set; }
         public double DurationInMiliSeconds { get; set; }
+        private int hours;
+        private int minutes;
+        private int seconds;
 
         public Song()
         {
@@ -21,12 +24,33 @@ namespace DAN_XXXIX_Dejan_Prodanovic
         {
             Author = author;
             Name = name;
-            int hours = Int32.Parse(timeSpanString[0]);
-            int minutes = Int32.Parse(timeSpanString[1]);
-            int seconds = Int32.Parse(timeSpanString[2]);
+            hours = Int32.Parse(timeSpanString[0]);
+            minutes = Int32.Parse(timeSpanString[1]);
+            seconds = Int32.Parse(timeSpanString[2]);
 
             TimeSpan timeSpan = new TimeSpan(hours, minutes, seconds);
             DurationInMiliSeconds = timeSpan.TotalMilliseconds;
+        }
+        public override string ToString()
+        {
+            string hours, minutes, seconds;
+
+            if (this.hours.ToString().Length < 2)
+                hours = String.Format("0{0}", this.hours);
+            else
+                hours = this.hours.ToString();
+
+            if (this.minutes.ToString().Length < 2)
+                minutes = String.Format("0{0}", this.minutes);
+            else
+                minutes = this.minutes.ToString();
+
+            if (this.seconds.ToString().Length < 2)
+                seconds = String.Format("0{0}", this.seconds);
+            else
+                seconds = this.seconds.ToString();
+
+            return Author+": " + Name + " " + hours + ":" + minutes + ":" + seconds;
         }
     }
 }

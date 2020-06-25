@@ -20,6 +20,7 @@ namespace DAN_XXXIX_Dejan_Prodanovic
 
         public void StartMenu()
         {
+            ReadSongsFromFile();
             string option;
             do
             {
@@ -48,7 +49,7 @@ namespace DAN_XXXIX_Dejan_Prodanovic
                             stopWatch = new Stopwatch();
                             printIfSongPlaysThread.Start();
                             stopWatch.Start();
-                            //songEnds.WaitOne();
+                            songEnds.WaitOne();
                         }
                         break;
 
@@ -59,7 +60,7 @@ namespace DAN_XXXIX_Dejan_Prodanovic
             } while (true);
                      
         }
-        public void ReadSongs()
+        public void ReadSongsFromFile()
         {
             using (StreamReader sr = new StreamReader("../../Music.txt"))
             {
@@ -67,7 +68,7 @@ namespace DAN_XXXIX_Dejan_Prodanovic
                 int counter = 1;
                 while ((line = sr.ReadLine()) != null)
                 {
-                    Console.WriteLine("{0}.{1}",counter,line);
+                    //Console.WriteLine("{0}.{1}",counter,line);
                     string[]strArr = line.Split(',');
                     string[] timeSpan = strArr[2].Split(':');
                    
@@ -76,7 +77,13 @@ namespace DAN_XXXIX_Dejan_Prodanovic
                 }
             }
         }
-
+        public void ReadSongs()
+        {
+            foreach (KeyValuePair<int, Song> song in songs)
+            {
+                Console.WriteLine("{0} - {1}", song.Key, song.Value);
+            }
+        }
         public void AddSong()
         {
             string author = Validations.AuthorInput();
@@ -107,19 +114,19 @@ namespace DAN_XXXIX_Dejan_Prodanovic
 
             Console.WriteLine("Vreme pustanja pesme {0}:{1}:{2}",DateTime.Now.Hour,
                 DateTime.Now.Minute,DateTime.Now.Second);
-            Console.WriteLine("Naziv pesme: {0}",songs[songNumber].Name);
-
-         
+            Console.WriteLine("Naziv pesme: {0}\n",songs[songNumber].Name);  
         }
 
         public void PrintIfSongPlays(int songNumber)
-        {
-           
+        {       
             while (stopWatch.ElapsedMilliseconds < songs[songNumber].DurationInMiliSeconds)
             {
                 Console.WriteLine("Pesma i dalje traje");
                 Thread.Sleep(1000);
             }
+            Console.WriteLine("\nPesma je zavrsena");
+            Console.WriteLine();
+            songEnds.Set();
         }
     }
 }

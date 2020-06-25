@@ -17,21 +17,20 @@ namespace DAN_XXXIX_Dejan_Prodanovic
         {
             AudioPlayer audioPlayer = new AudioPlayer();
 
-            Thread t1 = new Thread(audioPlayer.StartMenu);
-            t1.Start();
 
-            t1.Join();
+            //Thread t1 = new Thread(audioPlayer.StartMenu);
+            //t1.Start();
 
-            //Stopwatch stopWatch = new Stopwatch();
-            //stopWatch.Start();
+            //t1.Join();
 
-            //while (stopWatch.ElapsedMilliseconds<10000)
-            //{
-            //    Console.WriteLine("nesto");
-            //    Thread.Sleep(2000);
-            //}
+            while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape))
+            {
+                
+                    Console.WriteLine("nesto");
+                
+            }
 
-            Console.ReadLine();
+            
             
         }
     }
