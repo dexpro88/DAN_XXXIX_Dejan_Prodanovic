@@ -19,7 +19,7 @@ namespace DAN_XXXIX_Dejan_Prodanovic
         {
 
         }
-
+        
         public Song(string author, string name, string[] timeSpanString)
         {
             Author = author;
@@ -42,6 +42,11 @@ namespace DAN_XXXIX_Dejan_Prodanovic
             TimeSpan timeSpan = new TimeSpan(hours, minutes, seconds);
             DurationInMiliSeconds = timeSpan.TotalMilliseconds;
         }
+
+        /// <summary>
+        /// we override ToString method for Song class
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             string hours, minutes, seconds;

@@ -8,6 +8,12 @@ namespace DAN_XXXIX_Dejan_Prodanovic
 {
     class Validations
     {
+
+        /// <summary>
+        /// method that takes input for author from keyboard
+        /// it disables user to iput string whose length is less than 3 characters
+        /// </summary>
+        /// <returns></returns>
         public static string AuthorInput()
         {
             string author;
@@ -23,6 +29,11 @@ namespace DAN_XXXIX_Dejan_Prodanovic
             return author;
         }
 
+        /// <summary>
+        /// method that takes input for song name from keyboard
+        /// it disables user to iput string whose length is less than 3 characters
+        /// </summary>
+        /// <returns></returns>
         public static string SongNameInput()
         {
             string songName;
@@ -38,11 +49,18 @@ namespace DAN_XXXIX_Dejan_Prodanovic
             return songName;
 
         }
-
+        /// <summary>
+        /// method that takes input for duration of song from keyboard
+        /// it takes input for hours than for minutes and at the end for seconds
+        /// it disables user from invalid input
+        /// </summary>
+        /// <param name="hours"></param>
+        /// <param name="minutes"></param>
+        /// <param name="seconds"></param>
         public static void SongDurationInput(out string hours, out string minutes, out string seconds)
         {
             Console.WriteLine("Format trajanja pesme je ”00:00:00”");
-
+            //input for hours
             int hoursInt;
             bool succes = false;
             do
@@ -51,21 +69,12 @@ namespace DAN_XXXIX_Dejan_Prodanovic
                 succes = Int32.TryParse(Console.ReadLine(), out hoursInt);
                 if (!succes || hoursInt<0 || hoursInt > 99)
                 {
-                    Console.WriteLine("Nevalidan format za sate");
+                    Console.WriteLine("Nevalidan unos za sate");
                 }
             } while (!succes || hoursInt < 0 || hoursInt > 99);
             hours = hoursInt.ToString();
-            //do
-            //{
-            //    Console.WriteLine("Unesite sate:");
-            //    hours = Console.ReadLine();
-
-            //    if ( String.IsNullOrEmpty(hours) || hours.Length > 2 || !IsStringNumeric(hours))
-            //    {
-            //        Console.WriteLine("Nevalidan format za sate");
-            //    }
-            //} while (String.IsNullOrEmpty(hours) || hours.Length > 2 || !IsStringNumeric(hours));
-
+            
+            //input for minutes
             int minutesInt;
             
             do
@@ -74,21 +83,12 @@ namespace DAN_XXXIX_Dejan_Prodanovic
                 succes = Int32.TryParse(Console.ReadLine(), out minutesInt);
                 if (!succes || minutesInt < 0 || minutesInt > 59)
                 {
-                    Console.WriteLine("Nevalidan format za minute");
+                    Console.WriteLine("Nevalidan unos za minute");
                 }
             } while (!succes || minutesInt < 0 || minutesInt > 59);
             minutes = minutesInt.ToString();
-            //do
-            //{
-            //    Console.WriteLine("Unesite minute:");
-            //    minutes = Console.ReadLine();
-
-            //    if (String.IsNullOrEmpty(minutes) ||minutes.Length > 2 || !IsStringNumeric(minutes))
-            //    {
-            //        Console.WriteLine("Nevalidan format za minute");
-            //    }
-            //} while (String.IsNullOrEmpty(minutes) || minutes.Length > 2 || !IsStringNumeric(minutes));
-
+            
+            //input for seconds
             int secundsInt;
 
             do
@@ -97,24 +97,17 @@ namespace DAN_XXXIX_Dejan_Prodanovic
                 succes = Int32.TryParse(Console.ReadLine(), out secundsInt);
                 if (!succes || secundsInt < 0 || secundsInt > 59)
                 {
-                    Console.WriteLine("Nevalidan format za sekunde");
+                    Console.WriteLine("Nevalidan unos za sekunde");
                 }
             } while (!succes || secundsInt < 0 || secundsInt > 59);
             seconds = secundsInt.ToString();
-            //do
-            //{
-            //    Console.WriteLine("Unesite sekunde:");
-            //    seconds = Console.ReadLine();
-
-            //    if (String.IsNullOrEmpty(seconds) || seconds.Length > 2 || !IsStringNumeric(seconds))
-            //    {
-            //        Console.WriteLine("Nevalidan format za sekunde");
-            //    }
-            //} while (String.IsNullOrEmpty(seconds) || seconds.Length > 2 || !IsStringNumeric(seconds));
-
-
+          
         }
-
+        /// <summary>
+        /// method that takes input for number of song that user want to play
+        /// user has to input integer number
+        /// </summary>
+        /// <returns></returns>
         public static int SongNumberInput()
         {
             int songNumber;
@@ -130,16 +123,6 @@ namespace DAN_XXXIX_Dejan_Prodanovic
             return songNumber;
         }
 
-        private static bool IsStringNumeric(string str)
-        {
-            for (int i = 0; i < str.Length; i++)
-            {
-                if (!Char.IsDigit(str, i))
-                {
-                    return false;
-                }   
-            }
-            return true;
-        }
+        
     }
 }

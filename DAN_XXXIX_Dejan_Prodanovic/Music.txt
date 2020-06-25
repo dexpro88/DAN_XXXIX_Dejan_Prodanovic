@@ -2,7 +2,3 @@ Autor1,Pesma1,00:02:20
 Autor2,Pesma2,00:00:10
 Autor3,Pesma3,00:02:20
 Autor4,Pesma4,00:02:20
-fddf,fsdf,03:03:03
-sfdsf,fsdfs,03:04:22
-asd,sdas,99:22:22
-qwqw,qqwqw,88:00:04

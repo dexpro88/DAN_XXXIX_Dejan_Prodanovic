@@ -12,6 +12,9 @@ namespace DAN_XXXIX_Dejan_Prodanovic
         Dictionary<int, string> commercials = new Dictionary<int, string>();
         Random rnd = new Random();
 
+        /// <summary>
+        /// method that reads commercials from file and adds them to Dictionary collection
+        /// </summary>
         public void ReadSongsFromFile()
         {
             using (StreamReader sr = new StreamReader("../../Reklame.txt"))
@@ -26,7 +29,9 @@ namespace DAN_XXXIX_Dejan_Prodanovic
             }
            
         }
-
+        /// <summary>
+        /// method that prints random commercial from dictionary commercials
+        /// </summary>
         public void PrintRandomCommercial()
         {
             int commercialIndex = rnd.Next(1,commercials.Count);

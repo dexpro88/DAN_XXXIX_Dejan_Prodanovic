@@ -11,15 +11,14 @@ namespace DAN_XXXIX_Dejan_Prodanovic
 {
     
     class Program
-    {
-        
+    {     
         static void Main(string[] args)
         {
             AudioPlayer audioPlayer = new AudioPlayer();
             Thread t1 = new Thread(audioPlayer.StartMenu);
-            //t1.IsBackground = true;
             t1.Start();
             
+            //in case that user press Escape button application will end
             do
             {
                  

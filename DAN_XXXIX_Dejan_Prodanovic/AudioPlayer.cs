@@ -19,6 +19,11 @@ namespace DAN_XXXIX_Dejan_Prodanovic
         Stopwatch stopWatch;
         int numberOfSongs;
         CommercialFileActions commercial = new CommercialFileActions();
+
+        /// <summary>
+        /// main menu of application
+        /// it is runned  by 
+        /// </summary>
         public void StartMenu()
         {
             ReadSongsFromFile();
@@ -29,7 +34,7 @@ namespace DAN_XXXIX_Dejan_Prodanovic
             {
                 Console.WriteLine("1.Dodaj novu pesmu");
                 Console.WriteLine("2.Prikazi sve pesme");
-                Console.WriteLine("Pritisnite ESC da ugasite Audio Player");
+                Console.WriteLine("Pritisnite ESC da ugasite Audio Player u bilo kom trenutku");
                 
                 option = Console.ReadLine();
 
@@ -49,11 +54,11 @@ namespace DAN_XXXIX_Dejan_Prodanovic
                         {
 
                             PlaySong(songNumber);
-
+                            //we create thread that prints message that song is playing  every 1000ms
                             printIfSongPlaysThread = new Thread(() => PrintIfSongPlays(songNumber));
-                            //printIfSongPlaysThread.IsBackground = true;
+                            //we create thread that prints commercial every 200ms
                             printCommercialsThread = new Thread(()=>PrintCommercials(songNumber));
-                            //printCommercialsThread.IsBackground = true;
+                            
                             stopWatch = new Stopwatch();
 
                             printIfSongPlaysThread.Start();
@@ -72,6 +77,10 @@ namespace DAN_XXXIX_Dejan_Prodanovic
             } while (true);
                      
         }
+
+        /// <summary>
+        /// method that reads songs from file and adds them to dictionary songs
+        /// </summary>
         public void ReadSongsFromFile()
         {
             using (StreamReader sr = new StreamReader("../../Music.txt"))
@@ -90,6 +99,10 @@ namespace DAN_XXXIX_Dejan_Prodanovic
             }
             numberOfSongs = songs.Count();
         }
+
+        /// <summary>
+        /// method that prints user songs from dictionary songs
+        /// </summary>
         public void ReadSongs()
         {
             foreach (KeyValuePair<int, Song> song in songs)
@@ -97,6 +110,11 @@ namespace DAN_XXXIX_Dejan_Prodanovic
                 Console.WriteLine("{0} - {1}", song.Key, song.Value);
             }
         }
+
+        /// <summary>
+        /// method that adds new song
+        /// it adds new song to file and to dictionary songs
+        /// </summary>
         public void AddSong()
         {
             string author = Validations.AuthorInput();
@@ -126,6 +144,11 @@ namespace DAN_XXXIX_Dejan_Prodanovic
                 
             }
         }
+
+        /// <summary>
+        /// method that prints the moment when sont started and name of the song
+        /// </summary>
+        /// <param name="songNumber"></param>
         public void PlaySong(int songNumber)
         {
 
@@ -133,7 +156,12 @@ namespace DAN_XXXIX_Dejan_Prodanovic
                 DateTime.Now.Minute,DateTime.Now.Second);
             Console.WriteLine("Naziv pesme: {0}\n",songs[songNumber].Name);  
         }
-
+        /// <summary>
+        /// method that notifies user that song is still playing every 1000ms
+        /// it notifies user when song is ended and at that moment it signals thread that runs StartMenu method  
+        /// so it can continue to work
+        /// </summary>
+        /// <param name="songNumber"></param>
         public void PrintIfSongPlays(int songNumber)
         {       
             while (stopWatch.ElapsedMilliseconds < songs[songNumber].DurationInMiliSeconds)
@@ -146,13 +174,17 @@ namespace DAN_XXXIX_Dejan_Prodanovic
             songEnds.Set();
         }
 
+        /// <summary>
+        /// method that print random commercial from file commercials every 2000ms
+        /// </summary>
+        /// <param name="songNumber"></param>
         public void PrintCommercials(int songNumber)
         {
              
             while (stopWatch.ElapsedMilliseconds < songs[songNumber].DurationInMiliSeconds)
             {
                 commercial.PrintRandomCommercial();
-                Thread.Sleep(2000);
+                Thread.Sleep(200);
             }
         }
     }
