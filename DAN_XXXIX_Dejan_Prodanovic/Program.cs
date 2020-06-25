@@ -15,8 +15,12 @@ namespace DAN_XXXIX_Dejan_Prodanovic
         {
             AudioPlayer audioPlayer = new AudioPlayer();
             audioPlayer.StartMenu();
+
            
-            Console.ReadLine();
+            //TimeSpan interval = new TimeSpan(0,0,3);
+            //Console.WriteLine(interval.TotalMilliseconds);
+           
+            
         }
     }
 }

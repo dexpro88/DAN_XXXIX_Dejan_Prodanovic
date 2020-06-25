@@ -46,6 +46,7 @@
     <Compile Include="AudioPlayer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Song.cs" />
     <Compile Include="Validations.cs" />
   </ItemGroup>
   <ItemGroup>

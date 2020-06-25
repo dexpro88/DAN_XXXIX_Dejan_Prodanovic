@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -9,34 +10,55 @@ namespace DAN_XXXIX_Dejan_Prodanovic
 {
     class AudioPlayer
     {
+        List<Song> songs = new List<Song>();
         public void StartMenu()
         {
-            Console.WriteLine("1.Dodaj novu pesmu");
-            Console.WriteLine("2.Prikazi sve pesme");
-            string option = Console.ReadLine();
-
-            switch (option)
+            string option;
+            do
             {
-                case "1":
-                    AddSong();
-                    break;
-                case "2":
-                    ReadSongs();
-                    break;
-                default:
-                    Console.WriteLine("Izabrali ste nepostojecu opciju");
-                    break;
-            }
+                Console.WriteLine("1.Dodaj novu pesmu");
+                Console.WriteLine("2.Prikazi sve pesme");
+                Console.WriteLine("3.Napusti program");
+                option = Console.ReadLine();
+
+                switch (option)
+                {
+                    case "1":
+                        AddSong();
+                        break;
+                    case "2":
+                        ReadSongs();
+
+                        Console.WriteLine("\nUnesite redni broj pesme koju zelite da pustite ili b za povratak nazad");
+                        string answer = Console.ReadLine();
+                        if (answer.Equals("b") || (answer.Equals("B")))
+                        {
+                            break;
+                        }
+                        break;
+                    case "3":
+
+                        break;
+                    default:
+                        Console.WriteLine("Izabrali ste nepostojecu opciju");
+                        break;
+                }
+            } while (!option.Equals("3"));
+           
         }
         public void ReadSongs()
         {
             using (StreamReader sr = new StreamReader("../../Music.txt"))
             {
                 string line;
-                
+                int counter = 1;
                 while ((line = sr.ReadLine()) != null)
                 {
-                    Console.WriteLine(line);
+                    Console.WriteLine("{0}.{1}",counter++,line);
+                    string[]strArr = line.Split(',');
+                    string[] timeSpan = strArr[2].Split(':');
+                   
+                    Song songFromFile = new Song(strArr[0],strArr[1],timeSpan);
                 }
             }
         }
@@ -65,6 +87,10 @@ namespace DAN_XXXIX_Dejan_Prodanovic
                 sw.WriteLine(songForFile);
                 
             }
+        }
+        public void PlaySong(string author, string songName, TimeSpan songDuration)
+        {
+
         }
     }
 }
