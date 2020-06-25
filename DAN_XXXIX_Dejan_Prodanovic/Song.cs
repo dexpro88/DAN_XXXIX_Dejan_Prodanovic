@@ -31,6 +31,17 @@ namespace DAN_XXXIX_Dejan_Prodanovic
             TimeSpan timeSpan = new TimeSpan(hours, minutes, seconds);
             DurationInMiliSeconds = timeSpan.TotalMilliseconds;
         }
+
+        public Song(string author, string name, int hours, int minutes, int seconds)
+        {
+            Author = author;
+            Name = name;
+            this.hours = hours;
+            this.minutes = minutes;
+            this.seconds = seconds;
+            TimeSpan timeSpan = new TimeSpan(hours, minutes, seconds);
+            DurationInMiliSeconds = timeSpan.TotalMilliseconds;
+        }
         public override string ToString()
         {
             string hours, minutes, seconds;

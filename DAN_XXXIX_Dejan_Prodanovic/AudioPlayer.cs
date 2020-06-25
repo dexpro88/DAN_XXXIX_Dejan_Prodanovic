@@ -12,21 +12,25 @@ namespace DAN_XXXIX_Dejan_Prodanovic
 {
     class AudioPlayer
     {
-        Dictionary<int, Song> songs = new Dictionary<int, Song>();
-        Thread printIfSongPlaysThread;
-        
+        SortedDictionary<int, Song> songs = new SortedDictionary<int, Song>();
+        public Thread printIfSongPlaysThread;
+        public Thread printCommercialsThread;
         AutoResetEvent songEnds = new AutoResetEvent(false);
         Stopwatch stopWatch;
-
+        int numberOfSongs;
+        CommercialFileActions commercial = new CommercialFileActions();
         public void StartMenu()
         {
             ReadSongsFromFile();
+            commercial.ReadSongsFromFile();
             string option;
+
             do
             {
                 Console.WriteLine("1.Dodaj novu pesmu");
                 Console.WriteLine("2.Prikazi sve pesme");
-                //Console.WriteLine("3.Napusti program");
+                Console.WriteLine("Pritisnite ESC da ugasite Audio Player");
+                
                 option = Console.ReadLine();
 
                 switch (option)
@@ -40,21 +44,29 @@ namespace DAN_XXXIX_Dejan_Prodanovic
                         Console.WriteLine("\nUnesite redni broj pesme koju zelite da pustite");
                         int songNumber = Validations.SongNumberInput();
                         if (!songs.ContainsKey(songNumber))
-                            Console.WriteLine("Ne postoji pesma sa tim rednim brojem");
+                            Console.WriteLine("\nNe postoji pesma sa tim rednim brojem\n");
                         else
                         {
 
                             PlaySong(songNumber);
+
                             printIfSongPlaysThread = new Thread(() => PrintIfSongPlays(songNumber));
+                            //printIfSongPlaysThread.IsBackground = true;
+                            printCommercialsThread = new Thread(()=>PrintCommercials(songNumber));
+                            //printCommercialsThread.IsBackground = true;
                             stopWatch = new Stopwatch();
+
                             printIfSongPlaysThread.Start();
                             stopWatch.Start();
+                            printCommercialsThread.Start();
+
+
                             songEnds.WaitOne();
                         }
                         break;
 
                     default:
-                        Console.WriteLine("Izabrali ste nepostojecu opciju");
+                        Console.WriteLine("\nIzabrali ste nepostojecu opciju\n");
                         break;
                 }
             } while (true);
@@ -68,7 +80,7 @@ namespace DAN_XXXIX_Dejan_Prodanovic
                 int counter = 1;
                 while ((line = sr.ReadLine()) != null)
                 {
-                    //Console.WriteLine("{0}.{1}",counter,line);
+                  
                     string[]strArr = line.Split(',');
                     string[] timeSpan = strArr[2].Split(':');
                    
@@ -76,6 +88,7 @@ namespace DAN_XXXIX_Dejan_Prodanovic
                     songs.Add(counter++, songFromFile);
                 }
             }
+            numberOfSongs = songs.Count();
         }
         public void ReadSongs()
         {
@@ -93,6 +106,9 @@ namespace DAN_XXXIX_Dejan_Prodanovic
 
             Validations.SongDurationInput(out hours, out minutes, out seconds);
 
+            Song newSong = new Song(author, songName, Int32.Parse(hours), Int32.Parse(minutes), Int32.Parse(seconds));
+            songs.Add(++numberOfSongs, newSong);
+
             if (hours.Length != 2)
                 hours = String.Format("0{0}",hours);
 
@@ -101,10 +117,11 @@ namespace DAN_XXXIX_Dejan_Prodanovic
 
             if (seconds.Length != 2)
                 seconds = String.Format("0{0}", seconds);
-
+          
             using (StreamWriter sw = File.AppendText("../../Music.txt"))
             {
                 string songForFile = String.Format("{0},{1},{2}:{3}:{4}",author,songName,hours,minutes,seconds);
+                 
                 sw.WriteLine(songForFile);
                 
             }
@@ -127,6 +144,16 @@ namespace DAN_XXXIX_Dejan_Prodanovic
             Console.WriteLine("\nPesma je zavrsena");
             Console.WriteLine();
             songEnds.Set();
+        }
+
+        public void PrintCommercials(int songNumber)
+        {
+             
+            while (stopWatch.ElapsedMilliseconds < songs[songNumber].DurationInMiliSeconds)
+            {
+                commercial.PrintRandomCommercial();
+                Thread.Sleep(2000);
+            }
         }
     }
 }

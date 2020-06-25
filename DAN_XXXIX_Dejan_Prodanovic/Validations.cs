@@ -41,42 +41,76 @@ namespace DAN_XXXIX_Dejan_Prodanovic
 
         public static void SongDurationInput(out string hours, out string minutes, out string seconds)
         {
-            Console.WriteLine("Format trajanja pesme je 00:00:00”");
-            
+            Console.WriteLine("Format trajanja pesme je ”00:00:00”");
+
+            int hoursInt;
+            bool succes = false;
             do
             {
                 Console.WriteLine("Unesite sate:");
-                hours = Console.ReadLine();
-
-                if (hours.Length > 2 || hours.Length < 0 || !IsStringNumeric(hours))
+                succes = Int32.TryParse(Console.ReadLine(), out hoursInt);
+                if (!succes || hoursInt<0 || hoursInt > 99)
                 {
                     Console.WriteLine("Nevalidan format za sate");
                 }
-            } while (hours.Length > 2 || hours.Length < 0 || !IsStringNumeric(hours));
+            } while (!succes || hoursInt < 0 || hoursInt > 99);
+            hours = hoursInt.ToString();
+            //do
+            //{
+            //    Console.WriteLine("Unesite sate:");
+            //    hours = Console.ReadLine();
 
-         
+            //    if ( String.IsNullOrEmpty(hours) || hours.Length > 2 || !IsStringNumeric(hours))
+            //    {
+            //        Console.WriteLine("Nevalidan format za sate");
+            //    }
+            //} while (String.IsNullOrEmpty(hours) || hours.Length > 2 || !IsStringNumeric(hours));
+
+            int minutesInt;
+            
             do
             {
                 Console.WriteLine("Unesite minute:");
-                minutes = Console.ReadLine();
-
-                if (minutes.Length > 2 || minutes.Length < 0 || !IsStringNumeric(minutes))
+                succes = Int32.TryParse(Console.ReadLine(), out minutesInt);
+                if (!succes || minutesInt < 0 || minutesInt > 59)
                 {
                     Console.WriteLine("Nevalidan format za minute");
                 }
-            } while (minutes.Length > 2 || minutes.Length < 0 || !IsStringNumeric(minutes));
+            } while (!succes || minutesInt < 0 || minutesInt > 59);
+            minutes = minutesInt.ToString();
+            //do
+            //{
+            //    Console.WriteLine("Unesite minute:");
+            //    minutes = Console.ReadLine();
 
-             
+            //    if (String.IsNullOrEmpty(minutes) ||minutes.Length > 2 || !IsStringNumeric(minutes))
+            //    {
+            //        Console.WriteLine("Nevalidan format za minute");
+            //    }
+            //} while (String.IsNullOrEmpty(minutes) || minutes.Length > 2 || !IsStringNumeric(minutes));
+
+            int secundsInt;
+
             do
             {
                 Console.WriteLine("Unesite sekunde:");
-                seconds = Console.ReadLine();
-
-                if (seconds.Length > 2 || seconds.Length<0 || !IsStringNumeric(seconds))
+                succes = Int32.TryParse(Console.ReadLine(), out secundsInt);
+                if (!succes || secundsInt < 0 || secundsInt > 59)
                 {
                     Console.WriteLine("Nevalidan format za sekunde");
                 }
-            } while (seconds.Length > 2 || seconds.Length < 0 || !IsStringNumeric(seconds));
+            } while (!succes || secundsInt < 0 || secundsInt > 59);
+            seconds = secundsInt.ToString();
+            //do
+            //{
+            //    Console.WriteLine("Unesite sekunde:");
+            //    seconds = Console.ReadLine();
+
+            //    if (String.IsNullOrEmpty(seconds) || seconds.Length > 2 || !IsStringNumeric(seconds))
+            //    {
+            //        Console.WriteLine("Nevalidan format za sekunde");
+            //    }
+            //} while (String.IsNullOrEmpty(seconds) || seconds.Length > 2 || !IsStringNumeric(seconds));
 
 
         }
